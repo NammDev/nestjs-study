@@ -9,7 +9,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UserDto } from './user.dto';
-import { plainToClass } from 'class-transformer';
 
 @Controller('users')
 export class UserController {
@@ -23,13 +22,8 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @Post()
   createUser(@Body() user: UserDto) {
-    const userReal = plainToClass(UserDto, user, {
-      excludeExtraneousValues: true,
-    });
-    console.log(userReal);
-    return {
-      username: user.username,
-      password: user.password,
-    };
+    user.createdAt = new Date();
+    const userReal = UserDto.plainToClass(UserDto, user);
+    return userReal;
   }
 }
