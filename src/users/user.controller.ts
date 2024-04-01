@@ -10,9 +10,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UserDto } from './user.dto';
+import { ModuleRef } from '@nestjs/core';
 
 @Controller('users')
 export class UserController {
+  constructor(private moduleRef: ModuleRef) {}
+
   @Get(':id')
   getUserById(@Param('id', ParseIntPipe) id: number) {
     return {
@@ -20,13 +23,10 @@ export class UserController {
     };
   }
 
-  userService: UserService;
-  constructor() {
-    this.userService = new UserService();
-  }
   @UsePipes(new ValidationPipe())
   @Post()
   createUser(@Body() user: UserDto) {
-    return this.userService.createUser(user);
+    const userService = this.moduleRef.get(UserService, { strict: false });
+    return userService.createUser(user);
   }
 }
