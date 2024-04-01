@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import {
   Body,
   Controller,
@@ -19,11 +20,13 @@ export class UserController {
     };
   }
 
+  userService: UserService;
+  constructor() {
+    this.userService = new UserService();
+  }
   @UsePipes(new ValidationPipe())
   @Post()
   createUser(@Body() user: UserDto) {
-    user.createdAt = new Date();
-    const userReal = UserDto.plainToClass(UserDto, user);
-    return userReal;
+    return this.userService.createUser(user);
   }
 }
