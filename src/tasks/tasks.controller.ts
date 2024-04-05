@@ -22,7 +22,7 @@ export class TasksController {
     return this.tasksService.createTask(createTaskDto);
   }
 
-  @Delete()
+  @Delete('/:id')
   async deleteTask(@Param('id') id: string): Promise<void> {
     return this.tasksService.deleteTask(id);
   }
