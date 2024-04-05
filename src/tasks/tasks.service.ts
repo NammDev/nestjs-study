@@ -51,7 +51,8 @@ export class TasksService {
   }
 
   async deleteTask(id: string): Promise<void> {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+    const found = await this.getTaskById(id);
+    this.tasks = this.tasks.filter((task) => task.id !== found.id);
   }
 
   async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
