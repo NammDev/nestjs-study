@@ -30,6 +30,10 @@ export class TasksService {
     return this.tasks;
   }
 
+  getTaskById(id: string): Task {
+    return this.tasks.find((task) => task.id === id);
+  }
+
   async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
     const { title, description } = createTaskDto;
     const task: Task = {
@@ -40,5 +44,9 @@ export class TasksService {
     };
     this.tasks.push(task);
     return task;
+  }
+
+  async deleteTask(id: string): Promise<void> {
+    this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 }
