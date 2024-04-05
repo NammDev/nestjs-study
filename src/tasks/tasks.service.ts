@@ -26,11 +26,11 @@ export class TasksService {
     },
   ];
 
-  getAllTasks() {
+  async getAllTasks(): Promise<Task[]> {
     return this.tasks;
   }
 
-  getTaskById(id: string): Task {
+  async getTaskById(id: string): Promise<Task> {
     return this.tasks.find((task) => task.id === id);
   }
 
@@ -48,5 +48,11 @@ export class TasksService {
 
   async deleteTask(id: string): Promise<void> {
     this.tasks = this.tasks.filter((task) => task.id !== id);
+  }
+
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+    task.status = status;
+    return task;
   }
 }
