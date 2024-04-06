@@ -1,3 +1,4 @@
+import { TaskRepository } from './task.repository';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuid } from 'uuid';
@@ -25,6 +26,8 @@ export class TasksService {
       status: TaskStatus.DONE,
     },
   ];
+
+  constructor(private readonly taskRepository: TaskRepository) {}
 
   async getAllTasks(): Promise<Task[]> {
     return this.tasks;
