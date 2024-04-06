@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaskEntity } from './task.entity';
-import { MongoRepository } from 'typeorm';
+import { TaskRepository } from './task.repository';
 
 @Injectable()
 export class TasksService {
   constructor(
     @InjectRepository(TaskEntity)
-    private taskRepository: MongoRepository<TaskEntity>,
+    private taskRepository: TaskRepository<TaskEntity>,
   ) {}
 
   async getTaskById(id: number): Promise<TaskEntity> {
